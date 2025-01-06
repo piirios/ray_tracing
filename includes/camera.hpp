@@ -3,7 +3,7 @@
 class Camera
 {
 public:
-    Point origin;     // position de la caméra
+    Point origine;    // position de la caméra
     Vector direction; // orientation de la caméra
     float distance;   // distance
 
@@ -12,5 +12,7 @@ public:
 
     // Remarque: (direction, horizontal_vecteur, vertical_vecteur) forment une base orthonormée de l'espace
 
-    Point get_left_upper_corner_point();
+    Point get_left_upper_corner_point(int width, int height);
+    Camera();
+    Camera(Point p, Vector d, float dist);
 };

@@ -24,6 +24,7 @@ public:
   float y;
   float z;
 
+  Vector();
   Vector(float, float, float);
   float norm();
   float pt_dot(Point);
