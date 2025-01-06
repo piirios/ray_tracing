@@ -1,0 +1,28 @@
+# Version minimale de CMake requise
+cmake_minimum_required(VERSION 3.10)
+
+# Nom du projet
+project(ray_tracing LANGUAGES CXX)
+
+# Ajouter un standard C++
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED True)
+
+# Ajouter les répertoires include
+include_directories(includes)
+
+# Récupérer automatiquement tous les fichiers .cpp dans le répertoire src/
+file(GLOB_RECURSE SRC_FILES *.cpp)
+
+# Exclure les fichiers dans le dossier "CMakeFiles"
+list(FILTER SRC_FILES EXCLUDE REGEX "CMakeFiles")
+
+# Ajouter l'exécutable principal
+add_executable(ray_tracing ${SRC_FILES})
+
+# Optionnel : Ajouter des options pour compiler avec des warnings
+if(CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang")
+    target_compile_options(ray_tracing PRIVATE -Wall -Wextra -Wpedantic)
+elseif(CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
+    target_compile_options(ray_tracing PRIVATE /W4)
+endif()

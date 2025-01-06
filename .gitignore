@@ -1,0 +1,64 @@
+# Fichiers générés par CMake
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+Makefile
+
+#un build
+ray_casting
+
+# Répertoires de build (standard et personnalisés)
+build/
+*/build/
+out/
+bin/
+obj/
+
+# Fichiers générés pour l'édition ou débogage
+*.d
+*.o
+*.obj
+*.so
+*.dll
+*.dylib
+*.exe
+*.out
+*.log
+
+# Fichiers de projets pour certains IDE
+.idea/
+.vscode/
+*.code-workspace
+
+# Fichiers spécifiques à MacOS
+.DS_Store
+
+# Fichiers spécifiques à Windows
+Thumbs.db
+desktop.ini
+
+# Fichiers de sauvegarde ou temporaires générés par l'éditeur
+*.swp
+*.swo
+*.bak
+*.tmp
+*.~*
+
+# Archives ou paquets
+*.tar
+*.gz
+*.zip
+*.7z
+*.rar
+*.tgz
+
+# Clés et certificats sensibles
+*.pem
+*.crt
+*.key
+
+# Autres fichiers inutiles ou temporaires
+*.pyc
+*.pyo
+*.class
+*.cache
