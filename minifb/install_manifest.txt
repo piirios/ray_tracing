@@ -1,0 +1,7 @@
+/usr/local/lib/libminifb.a
+/usr/local/include/MiniFB.h
+/usr/local/include/MiniFB_cpp.h
+/usr/local/include/MiniFB_enums.h
+/usr/local/include/MiniFB_ios.h
+/usr/local/lib/cmake/minifb/minifb-config.cmake
+/usr/local/lib/cmake/minifb/minifb-config-noconfig.cmake

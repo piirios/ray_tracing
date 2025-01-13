@@ -11,14 +11,24 @@ set(CMAKE_CXX_STANDARD_REQUIRED True)
 # Ajouter les répertoires include
 include_directories(includes)
 
+# Ajouter la librairie
+# add_subdirectory(Minifb)
+
 # Récupérer automatiquement tous les fichiers .cpp dans le répertoire src/
 file(GLOB_RECURSE SRC_FILES *.cpp)
 
 # Exclure les fichiers dans le dossier "CMakeFiles"
 list(FILTER SRC_FILES EXCLUDE REGEX "CMakeFiles")
 
+# Excluse Minifb
+list(FILTER SRC_FILES EXCLUDE REGEX "minifb/.*")
+
 # Ajouter l'exécutable principal
 add_executable(ray_tracing ${SRC_FILES})
+
+# on lie Minifb
+# target_link_libraries(ray_tracing PRIVATE Minifb)
+# target_include_directories(Minifb PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
 
 # Optionnel : Ajouter des options pour compiler avec des warnings
 if(CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang")

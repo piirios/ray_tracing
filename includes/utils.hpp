@@ -12,6 +12,7 @@ public:
   float z;
 
   Point(float, float, float);
+  Point();
   Vector operator-(Point);
   bool operator==(Point);
   Point operator+(Vector);
@@ -37,6 +38,11 @@ public:
   Vector operator*(Vector); // produit vectoriel
   Vector operator*(double); // multiplication scalaire
   friend std::ostream &operator<<(std::ostream &, const Vector &);
+
+  // const
+  static Vector get_ex();
+  static Vector get_ey();
+  static Vector get_ez();
 };
 
 typedef struct color_t

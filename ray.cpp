@@ -1,6 +1,6 @@
 #include "includes/ray.hpp"
 
-Point Ray::at(double t) const
+Point Ray::at(double t)
 {
-    return origin + t * direction;
+    return start + vec * t;
 }

@@ -3,7 +3,7 @@
 #include "utils.hpp"
 #include <vector>
 
-class scene
+class Scene
 {
 private:
     Camera camera;
@@ -11,8 +11,12 @@ private:
     int heigth;
 
 public:
+    Scene(double ratio, int width);
+
     // TODO: implémenter une structure plus puissante (équivalent d'arbre kdim ?)
     std::vector<Object> obj_list; // liste des objets
 
     std::vector<color_t> pixel; // rendu de la scene
+
+    double inline ratio() const; // permet de récupérer le ratio
 };
