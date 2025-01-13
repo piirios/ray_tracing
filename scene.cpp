@@ -1,6 +1,6 @@
 #include "includes/scene.hpp"
 
-double inline Scene::ratio() const
+Scene::Scene(double ratio, int width)
 {
-    return width / heigth;
+    camera = Camera(Point(), Vector::get_ez(), 1.0, width, ratio, 2.0);
 }

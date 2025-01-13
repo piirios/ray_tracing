@@ -7,8 +7,6 @@ class Scene
 {
 private:
     Camera camera;
-    int width;
-    int heigth;
 
 public:
     Scene(double ratio, int width);
