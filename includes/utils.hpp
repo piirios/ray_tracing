@@ -13,6 +13,7 @@ public:
 
   Point(float, float, float);
   Point();
+  Point operator-(Vector);
   Vector operator-(Point);
   bool operator==(Point);
   Point operator+(Vector);

@@ -1,4 +1,5 @@
 #include "utils.hpp"
+#include "ray.hpp"
 
 class Camera
 {
@@ -8,6 +9,8 @@ private:
 
     double viewport_width;
     double viewport_height;
+
+    inline Point get_point(int i, int j);
 
 public:
     Point origine;    // position de la caméra
@@ -22,9 +25,11 @@ public:
 
     // Remarque: (direction, horizontal_vecteur, vertical_vecteur) forment une base orthonormée de l'espace
 
-    Point get_left_upper_corner_point(int width, int height);
+    inline Point get_left_upper_corner_point();
     Camera();
     Camera(Point p, Vector d, double dist, int width, double ratio, double viewport_width);
 
     const inline double real_ratio() const; // permet de récupérer le ratio réel
+
+    Ray build_ray(int i, int j); // permet de construire le rayon pour le pixel au (i, j)
 };

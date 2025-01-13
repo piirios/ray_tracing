@@ -1,7 +1,8 @@
 #include "includes/camera.hpp"
 #include "includes/utils.hpp"
+#include "includes/ray.hpp"
 
-Point Camera::get_left_upper_corner_point(int width, int height)
+inline Point Camera::get_left_upper_corner_point()
 {
     return origine + direction + horizontal_vecteur * (width / 2.) + vertical_vecteur * (height / 2.);
 }
@@ -23,4 +24,15 @@ Camera::Camera(Point p, Vector d, double dist, int width, double ratio, double v
 const inline double Camera::real_ratio() const
 {
     return double(width) / height;
+}
+
+Point Camera::get_point(int i, int j)
+{
+    return get_left_upper_corner_point() - vertical_vecteur * (delta_v * j) + horizontal_vecteur * (delta_u * i);
+}
+
+Ray Camera::build_ray(int i, int j)
+{
+    auto viewport_p = get_point(i, j);
+    return Ray(viewport_p - origine, origine);
 }

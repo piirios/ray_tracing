@@ -20,6 +20,11 @@ Point Point::operator+(Vector v)
   return Point(x + v.x, y + v.y, z + v.z);
 }
 
+Point Point::operator-(Vector v)
+{
+  return Point(x - v.x, y - v.y, z - v.z);
+}
+
 Vector::Vector() : x(.0), y(.0), z(.0) {};
 Vector::Vector(float ax, float ay, float az) : x(ax), y(ay), z(az) {};
 
