@@ -66,6 +66,11 @@ Vector Vector::operator*(Vector v)
   return Vector(y * v.z - v.y * z, z * v.x - v.z * x, x * v.y - v.x * y);
 }
 
+Vector Vector::operator*(double t)
+{
+  return Vector(t * x, t * y, t * z);
+}
+
 std::ostream &
 operator<<(std::ostream &stream, const Vector &v)
 {

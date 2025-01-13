@@ -35,6 +35,7 @@ public:
   Vector operator*(float);
   Vector operator/(float);
   Vector operator*(Vector); // produit vectoriel
+  Vector operator*(double); // multiplication scalaire
   friend std::ostream &operator<<(std::ostream &, const Vector &);
 };
 
