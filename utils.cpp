@@ -3,6 +3,8 @@
 
 Point::Point(float ax, float ay, float az) : x(ax), y(ay), z(az) {};
 
+Point::Point() : x(0.), y(0.), z(0.) {};
+
 bool Point::operator==(Point other)
 {
   return (x == other.x && y == other.y && z == other.z);
@@ -16,6 +18,11 @@ Vector Point::operator-(Point p)
 Point Point::operator+(Vector v)
 {
   return Point(x + v.x, y + v.y, z + v.z);
+}
+
+Point Point::operator-(Vector v)
+{
+  return Point(x - v.x, y - v.y, z - v.z);
 }
 
 Vector::Vector() : x(.0), y(.0), z(.0) {};
@@ -83,6 +90,21 @@ operator<<(std::ostream &stream, const Point &p)
 {
   stream << "(" << p.x << ", " << p.y << ", " << p.z << ")";
   return stream;
+}
+
+Vector Vector::get_ex()
+{
+  return Vector(1.0, 0.0, 0.0);
+}
+
+Vector Vector::get_ey()
+{
+  return Vector(0.0, 1.0, 0.0);
+}
+
+Vector Vector::get_ez()
+{
+  return Vector(0.0, 0.0, 1.0);
 }
 
 color_t colorName(char color)
