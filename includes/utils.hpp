@@ -46,12 +46,21 @@ public:
   static Vector get_ez();
 };
 
-typedef struct color_t
+class Color
 {
+public:
   int r;
   int g;
   int b;
-} color_t;
 
-color_t colorName(char);
-color_t mix(color_t, float, color_t, float);
+  Color() : r(0), g(0), b(0) {};
+  Color(int a, int b, int c) : r(a), g(b), b(c) {};
+
+  uint32_t into()
+  {
+    return (r << 16) | (g << 8) | b;
+  };
+};
+
+Color colorName(char);
+Color mix(Color, float, Color, float);

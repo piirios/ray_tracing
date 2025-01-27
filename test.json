@@ -1,0 +1,60 @@
+{
+    "camera": {
+        "position": [
+            0,
+            0,
+            -5
+        ],
+        "direction": [
+            0,
+            0,
+            1
+        ],
+        "distance": 1.0,
+        "viewport_width": 2.0
+    },
+    "objects": [
+        {
+            "type": "sphere",
+            "position": [
+                0,
+                0,
+                5
+            ],
+            "radius": 1.0,
+            "color": [
+                255,
+                0,
+                0
+            ]
+        },
+        {
+            "type": "sphere",
+            "position": [
+                2,
+                0,
+                7
+            ],
+            "radius": 0.5,
+            "color": [
+                0,
+                255,
+                0
+            ]
+        },
+        {
+            "type": "sphere",
+            "position": [
+                -2,
+                1,
+                6
+            ],
+            "radius": 1.5,
+            "color": [
+                0,
+                0,
+                255
+            ]
+        }
+    ]
+}

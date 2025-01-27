@@ -4,6 +4,9 @@ CMakeCache.txt
 cmake_install.cmake
 Makefile
 
+ray_casting
+test.ppm
+
 #un build
 ray_casting
 

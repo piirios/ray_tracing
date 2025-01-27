@@ -8,8 +8,13 @@ project(ray_tracing LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
+find_package(minifb REQUIRED)
+
+include_directories(/usr/local/include)
+
 # Ajouter les répertoires include
 include_directories(includes)
+link_directories(/usr/local/lib)
 
 # Ajouter la librairie
 # add_subdirectory(Minifb)
@@ -22,9 +27,14 @@ list(FILTER SRC_FILES EXCLUDE REGEX "CMakeFiles")
 
 # Excluse Minifb
 list(FILTER SRC_FILES EXCLUDE REGEX "minifb/.*")
+list(FILTER SRC_FILES EXCLUDE REGEX "ppm_visualization/.*")
+list(FILTER SRC_FILES EXCLUDE REGEX "pixel_vector_display/.*")
 
 # Ajouter l'exécutable principal
 add_executable(ray_tracing ${SRC_FILES})
+
+# target_link_libraries(ray_tracing sfml-graphics sfml-window sfml-system)
+target_link_libraries(ray_tracing PRIVATE minifb "-framework Cocoa" "-framework QuartzCore" "-framework IOKit" "-framework Metal" "-framework MetalKit")
 
 # on lie Minifb
 # target_link_libraries(ray_tracing PRIVATE Minifb)

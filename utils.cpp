@@ -107,31 +107,31 @@ Vector Vector::get_ez()
   return Vector(0.0, 0.0, 1.0);
 }
 
-color_t colorName(char color)
+Color colorName(char color)
 {
   switch (color)
   {
   case 'r':
-    return color_t{255, 0, 0};
+    return Color{255, 0, 0};
   case 'g':
-    return color_t{0, 255, 0};
+    return Color{0, 255, 0};
   case 'b':
-    return color_t{0, 0, 255};
+    return Color{0, 0, 255};
   case 'p':
-    return color_t{255, 0, 255};
+    return Color{255, 0, 255};
   case 'c':
-    return color_t{0, 255, 255};
+    return Color{0, 255, 255};
   case 'y':
-    return color_t{255, 255, 0};
+    return Color{255, 255, 0};
   default:
-    return color_t{255, 255, 255};
+    return Color{255, 255, 255};
   }
 }
 
-color_t mix(color_t c1, float i1, color_t c2, float i2)
+Color mix(Color c1, float i1, Color c2, float i2)
 {
   // Calcul de la couleur résultante par moyenne pondérée
-  color_t res = {
+  Color res = {
       static_cast<int>((c1.r * i1 + c2.r * i2) / (i1 + i2)),
       static_cast<int>((c1.g * i1 + c2.g * i2) / (i1 + i2)),
       static_cast<int>((c1.b * i1 + c2.b * i2) / (i1 + i2)),

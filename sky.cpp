@@ -1,10 +1,10 @@
 #include "includes/sky.hpp"
 
 // Constructeur du ciel
-Sky::Sky(color_t acolor) : color(acolor) {}
+Sky::Sky(Color acolor) : color(acolor) {}
 
 // Méthode pour récupérer la couleur du ciel
-color_t Sky::get_color(Point point)
+Color Sky::get_color(Point point)
 {
     return color; // Le ciel a une couleur uniforme
 }

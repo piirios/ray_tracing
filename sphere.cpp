@@ -7,7 +7,7 @@
 Sphere::Sphere(Point acenter, float aradius)
     : center(acenter), radius(aradius) {}
 
-Sphere::Sphere(Point acenter, float aradius, color_t acolor)
+Sphere::Sphere(Point acenter, float aradius, Color acolor)
     : center(acenter), radius(aradius)
 {
   color = acolor;
@@ -20,7 +20,7 @@ Sphere::Sphere(Point acenter, float aradius, char acolor)
 }
 
 // Méthode pour récupérer la couleur de la sphère
-color_t Sphere::get_color(Point point)
+Color Sphere::get_color(Point point)
 {
   return color;
 }

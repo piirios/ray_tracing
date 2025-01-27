@@ -4,16 +4,17 @@
 #include <optional>
 #include <iostream>
 
-class Sky : public Object {
+class Sky : public Object
+{
 private:
-    color_t color; // Couleur du ciel
+    Color color; // Couleur du ciel
 
 public:
     // Constructeurs
-    Sky(color_t acolor);  // Constructeur avec couleur fixe
+    Sky(Color acolor); // Constructeur avec couleur fixe
 
     // Méthode pour récupérer la couleur du ciel
-    color_t get_color(Point point) override;
+    Color get_color(Point point) override;
 
     // Méthode pour récupérer la normale au ciel
     Vector get_normal(Point point) override;

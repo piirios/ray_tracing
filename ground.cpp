@@ -1,10 +1,10 @@
 #include "includes/ground.hpp"
 
 // Constructeur du sol
-Ground::Ground(color_t acolor) : color(acolor) {}
+Ground::Ground(Color acolor) : color(acolor) {}
 
 // Méthode pour récupérer la couleur du sol
-color_t Ground::get_color(Point point)
+Color Ground::get_color(Point point)
 {
     return color; // Le sol a une couleur uniforme
 }

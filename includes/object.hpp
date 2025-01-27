@@ -1,3 +1,4 @@
+#pragma once
 #include "utils.hpp"
 #include "ray.hpp"
 #include <optional>
@@ -8,7 +9,16 @@ protected:
     Point origin;
 
 public:
-    virtual color_t get_color(Point point) = 0;
-    virtual Vector get_normal(Point point) = 0;
-    virtual std::optional<Point> intersect(Ray r) = 0;
+    virtual Color get_color(Point point)
+    {
+        return colorName('b');
+    };
+    virtual Vector get_normal(Point point)
+    {
+        return point - Point(0., 0., 0.);
+    };
+    virtual std::optional<Point> intersect(Ray r)
+    {
+        return std::nullopt;
+    };
 };
