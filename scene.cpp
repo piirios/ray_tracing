@@ -63,12 +63,15 @@ Scene::Scene(const std::string &file_path, double ratio, int width)
         }
         else if (obj["type"] == "ground")
         {
-            Ground *ground = new Ground(
-                Color(obj["color"][0], obj["color"][1], obj["color"][2]));
+            Ground *ground = new Ground(Color(obj["color1"][0], obj["color1"][1], obj["color1"][2]), Color(obj["color2"][0], obj["color2"][1], obj["color2"][2]), obj["cell_size"], obj["height"]);
+
             this->obj_list.push_back(ground);
 
             std::cout << "  Ground : Hauteur = " << obj["height"]
-                      << ", Couleur = (" << obj["color"][0] << ", " << obj["color"][1] << ", " << obj["color"][2] << ")" << std::endl;
+                      << ", Taille des cellules = " << obj["cell_size"]
+                      << ", Couleur 1 = (" << obj["color1"][0] << ", " << obj["color1"][1] << ", " << obj["color1"][2] << ")"
+                      << ", Couleur 2 = (" << obj["color2"][0] << ", " << obj["color2"][1] << ", " << obj["color2"][2] << ")"
+                      << std::endl;
         }
         else
         {

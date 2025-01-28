@@ -1,24 +1,21 @@
 #pragma once
+#include "utils.hpp"
+#include "ray.hpp"
 #include "object.hpp"
-#include <cmath>
 #include <optional>
-#include <iostream>
 
 class Ground : public Object
 {
 private:
-    Color color; // Couleur du sol
+    Color color1;
+    Color color2;
+    double cell_size;
+    double height;
 
 public:
-    // Constructeurs
-    Ground(Color acolor); // Constructeur avec couleur fixe
+    Ground(Color acolor1, Color acolor2, double cell_size, double aheight);
 
-    // Méthode pour récupérer la couleur du sol
-    Color get_color(Point point) override;
-
-    // Méthode pour récupérer la normale au sol
-    Vector get_normal(Point point) override;
-
-    // Méthode pour tester si un point intersecte le sol
-    std::optional<Point> intersect(Ray r) override;
+    Color get_color(Point point);
+    Vector get_normal(Point point);
+    std::optional<Point> intersect(Ray r);
 };

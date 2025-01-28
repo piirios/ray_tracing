@@ -16,12 +16,18 @@
     "objects": [
         {
             "type": "ground",
-            "height": 0,
-            "color": [
-                128,
-                128,
-                128
-            ]
+            "color1": [
+                255,
+                255,
+                255
+            ],
+            "color2": [
+                0,
+                0,
+                0
+            ],
+            "cell_size": 1.0,
+            "height": 0.0
         },
         {
             "type": "sphere",

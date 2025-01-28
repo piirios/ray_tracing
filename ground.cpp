@@ -1,29 +1,34 @@
 #include "includes/ground.hpp"
+#include <cmath>
 
-// Constructeur du sol
-Ground::Ground(Color acolor) : color(acolor) {}
+Ground::Ground(Color acolor1, Color acolor2, double cell_size, double aheight)
+    : color1(acolor1), color2(acolor2), cell_size(cell_size), height(aheight) {}
 
-// Méthode pour récupérer la couleur du sol
 Color Ground::get_color(Point point)
 {
-    return color; // Le sol a une couleur uniforme
+    int x_cell = static_cast<int>(std::floor(point.x / cell_size));
+    int z_cell = static_cast<int>(std::floor(point.z / cell_size));
+
+    bool is_white = (x_cell + z_cell) % 2 == 0;
+    return is_white ? color1 : color2;
 }
 
-// Méthode pour récupérer la normale au sol (vecteur pointant vers le haut)
 Vector Ground::get_normal(Point point)
 {
-    return Vector(0.0, 1.0, 0.0); // Le sol est "en bas", donc la normale pointe vers le haut
+    return Vector(0.0, 1.0, 0.0);
 }
 
-// Méthode pour tester si un rayon intersecte le sol
 std::optional<Point> Ground::intersect(Ray r)
 {
-    // Si le rayon pointe vers le haut (dy > 0) et son origine est au-dessus du sol,
-    // alors il y aura une intersection à y = 0.
-    if (r.vec.y <= 0)
-        return std::nullopt;         // Le rayon doit être dirigé vers le bas
-    double t = -r.start.y / r.vec.y; // La hauteur du sol (y = 0)
+    if (r.vec.y >= 0)
+        return std::nullopt;
+
+    double t = (height - r.start.y) / r.vec.y;
+
+    // Si t <= 0, l'intersection est derrière la caméra
     if (t <= 0)
-        return std::nullopt;                                             // Si le rayon ne va pas vers le sol, il n'y a pas d'intersection
-    return Point(r.start.x + t * r.vec.x, 0.0, r.start.z + t * r.vec.z); // Intersection avec le sol
+        return std::nullopt;
+
+    Point intersection(r.start.x + t * r.vec.x, height, r.start.z + t * r.vec.z);
+    return intersection;
 }
