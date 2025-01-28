@@ -19,6 +19,7 @@ public:
     };
     virtual std::optional<Point> intersect(Ray r)
     {
+        std::cout << "call default itersect" << ")\n";
         return std::nullopt;
     };
 };

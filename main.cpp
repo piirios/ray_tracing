@@ -40,10 +40,10 @@ int main(void)
 {
 
     Scene scene = Scene("test.json", 16.0 / 9.0, 800);
+    std::cout << "0. size: " << scene.obj_list.size() << '\n';
     scene.render();
     std::cout << "render done" << std::endl;
     scene.display();
-    // write_ppm("test.ppm", scene.width(), scene.height(), res);
 
     return 0;
 }
