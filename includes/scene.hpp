@@ -10,6 +10,7 @@ class Scene
 private:
     Sky sky; // default objet to intersect
     int samples_per_pixel;
+    int max_depth;
 
 public:
     Camera camera;
@@ -30,6 +31,8 @@ public:
     void render();
 
     std::optional<std::pair<Object *, Point>> try_hit(Ray r);
+
+    Color ray_color(Ray r, int depth);
 
     void display();
 };

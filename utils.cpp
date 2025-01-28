@@ -128,6 +128,11 @@ Vector Vector::get_ez()
   return Vector(0.0, 0.0, 1.0);
 }
 
+Color Color::operator*(double d)
+{
+  return Color(static_cast<int>(r * d), static_cast<int>(g * d), static_cast<int>(b * d));
+}
+
 Color colorName(char color)
 {
   switch (color)

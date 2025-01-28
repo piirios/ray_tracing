@@ -10,7 +10,7 @@
 
 using json = nlohmann::json;
 
-Scene::Scene(double ratio, int width) : sky(Sky(colorName('b')))
+Scene::Scene(double ratio, int width) : sky(Sky(colorName('b'))), samples_per_pixel(10), max_depth(10)
 {
     camera = Camera(Point(), Vector::get_ez(), 1.0, width, ratio, 2.0, 1.);
     pixel.reserve(camera.width * camera.height);
@@ -32,6 +32,7 @@ Scene::Scene(const std::string &file_path, double ratio, int width)
     json camera_data = scene_data["camera"];
 
     samples_per_pixel = camera_data["samples_per_pixel"];
+    max_depth = camera_data["max_depth"];
     Point position(
         camera_data["position"][0],
         camera_data["position"][1],
@@ -150,7 +151,7 @@ void Scene::render()
                 if (hit.has_value())
                 {
                     auto [closest_object, intersection_point] = hit.value();
-                    total_color = mix(total_color, 1.0f, closest_object->get_color(intersection_point), 1.0f / samples_per_pixel);
+                    total_color = mix(total_color, 1.0f, ray_color(ray, max_depth), 1.0f / samples_per_pixel);
                 }
                 else
                 {
@@ -160,6 +161,30 @@ void Scene::render()
 
             pixel[i + j * camera.width] = total_color.into();
         }
+    }
+}
+
+Color Scene::ray_color(Ray ray, int depth)
+{
+    if (depth <= 0)
+        return Color(0, 0, 0); // Base case: no more recursion, return black
+
+    auto hit = try_hit(ray);
+    if (hit.has_value())
+    {
+        auto [closest_object, intersection_point] = hit.value();
+        Vector normal = closest_object->get_normal(intersection_point);
+        Vector reflected_direction = ray.vec - normal * 2.0 * ray.vec.dot(normal);
+        reflected_direction = reflected_direction / reflected_direction.norm();
+
+        Color base_color = closest_object->get_color(intersection_point);
+
+        Color reflected_color = ray_color(Ray(reflected_direction, intersection_point), depth - 1);
+        return mix(base_color, 0.8f, reflected_color, 0.2f);
+    }
+    else
+    {
+        return sky.get_color(Point());
     }
 }
 

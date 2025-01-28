@@ -29,7 +29,7 @@ public:
 
   Vector();
   Vector(float, float, float);
-  Vector random_unit();
+  static Vector random_unit();
   float norm();
   float pt_dot(Point);
   float dot(Vector); // produit scalaire
@@ -57,6 +57,8 @@ public:
 
   Color() : r(0), g(0), b(0) {};
   Color(int a, int b, int c) : r(a), g(b), b(c) {};
+
+  Color operator*(double);
 
   uint32_t into()
   {
