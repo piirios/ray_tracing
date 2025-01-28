@@ -12,12 +12,12 @@ using json = nlohmann::json;
 
 Scene::Scene(double ratio, int width) : sky(Sky(colorName('b')))
 {
-    camera = Camera(Point(), Vector::get_ez(), 1.0, width, ratio, 2.0);
+    camera = Camera(Point(), Vector::get_ez(), 1.0, width, ratio, 2.0, 1.);
     pixel.reserve(camera.width * camera.height);
 };
 
 Scene::Scene(const std::string &file_path, double ratio, int width)
-    : camera(Point(0, 0, 0), Vector(0, 0, 1), 1.0, width, ratio, 2.0), sky(Sky(colorName('g')))
+    : camera(Point(0, 0, 0), Vector(0, 0, 1), 1.0, width, ratio, 2.0, 1.), sky(Sky(colorName('g')))
 {
     std::ifstream file(file_path);
     if (!file.is_open())
@@ -30,6 +30,8 @@ Scene::Scene(const std::string &file_path, double ratio, int width)
 
     // Charger la caméra
     json camera_data = scene_data["camera"];
+
+    samples_per_pixel = camera_data["samples_per_pixel"];
     Point position(
         camera_data["position"][0],
         camera_data["position"][1],
@@ -41,11 +43,12 @@ Scene::Scene(const std::string &file_path, double ratio, int width)
     double distance = camera_data["distance"];
     double viewport_width = camera_data["viewport_width"];
 
-    this->camera = Camera(position, direction, distance, width, ratio, viewport_width);
+    this->camera = Camera(position, direction, distance, width, ratio, viewport_width, 1. / samples_per_pixel);
 
     std::cout << "Position de la caméra : (" << position.x << ", " << position.y << ", " << position.z << ")" << std::endl;
     std::cout << "Direction de la caméra : (" << direction.x << ", " << direction.y << ", " << direction.z << ")" << std::endl;
     std::cout << "Distance : " << distance << ", Largeur du viewport : " << viewport_width << std::endl;
+    std::cout << "pixel_samples_scale : " << camera_data["pixel_samples_scale"] << std::endl;
     // Charger les objets
     for (const auto &obj : scene_data["objects"])
     {
@@ -98,7 +101,7 @@ int Scene::width() const
     return camera.width;
 }
 
-void Scene::render()
+/* void Scene::render()
 {
     pixel.resize(camera.width * camera.height);
 
@@ -138,6 +141,53 @@ void Scene::render()
             {
                 pixel[i + j * camera.width] = sky.get_color(Point()).into();
             }
+        }
+    }
+} */
+void Scene::render()
+{
+    pixel.resize(camera.width * camera.height);
+
+    for (int i = 0; i < camera.width; i++)
+    {
+        for (int j = 0; j < camera.height; j++)
+        {
+            Color total_color(0, 0, 0);
+
+            for (int s = 0; s < samples_per_pixel; s++)
+            {
+                Ray ray = camera.build_ray(i, j);
+
+                Object *closest_object = nullptr;
+                Point closest_intersection;
+                float closest_distance = std::numeric_limits<float>::max();
+
+                for (auto &obj : obj_list)
+                {
+                    auto intersection = obj->intersect(ray);
+                    if (intersection.has_value())
+                    {
+                        float distance = (intersection.value() - ray.start).norm();
+                        if (distance < closest_distance)
+                        {
+                            closest_distance = distance;
+                            closest_object = obj;
+                            closest_intersection = intersection.value();
+                        }
+                    }
+                }
+
+                if (closest_object)
+                {
+                    total_color = mix(total_color, 1.0f, closest_object->get_color(closest_intersection), 1.0f / samples_per_pixel);
+                }
+                else
+                {
+                    total_color = mix(total_color, 1.0f, sky.get_color(Point()), 1.0f / samples_per_pixel);
+                }
+            }
+
+            pixel[i + j * camera.width] = total_color.into();
         }
     }
 }

@@ -1,5 +1,6 @@
 #include "includes/utils.hpp"
 #include <cmath>
+#include <random>
 
 Point::Point(float ax, float ay, float az) : x(ax), y(ay), z(az) {};
 
@@ -137,4 +138,18 @@ Color mix(Color c1, float i1, Color c2, float i2)
       static_cast<int>((c1.b * i1 + c2.b * i2) / (i1 + i2)),
   };
   return res;
+}
+
+std::pair<double, double> sample_square()
+{
+  // Create a random number generator
+  static std::random_device rd;                           // Seed
+  static std::mt19937 gen(rd());                          // Random number generator
+  static std::uniform_real_distribution<> dis(-0.5, 0.5); // Uniform distribution in [-0.5, 0.5]
+
+  // Generate random offsets within the unit square
+  double x = dis(gen);
+  double y = dis(gen);
+
+  return {x, y};
 }

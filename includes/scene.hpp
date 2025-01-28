@@ -9,6 +9,7 @@ class Scene
 {
 private:
     Sky sky; // default objet to intersect
+    int samples_per_pixel;
 
 public:
     Camera camera;

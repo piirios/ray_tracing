@@ -14,11 +14,12 @@ Camera::Camera()
       direction(Vector::get_ex()),
       distance(1.0),
       horizontal_vecteur(Vector::get_ey()),
-      vertical_vecteur(Vector::get_ez())
+      vertical_vecteur(Vector::get_ez()),
+      pixel_samples_scale(1.)
 {
 }
 
-Camera::Camera(Point p, Vector d, double dist, int width, double ratio, double viewport_width)
+Camera::Camera(Point p, Vector d, double dist, int width, double ratio, double viewport_width, double pss)
     : origine(p),
       direction(d / d.norm()),
       distance(dist),
@@ -38,6 +39,8 @@ Camera::Camera(Point p, Vector d, double dist, int width, double ratio, double v
 
     delta_u = viewport_width / width;
     delta_v = viewport_height / height;
+
+    pixel_samples_scale = pss;
 }
 
 const inline double Camera::real_ratio() const
@@ -47,7 +50,8 @@ const inline double Camera::real_ratio() const
 
 Point Camera::get_point(int i, int j)
 {
-    return get_left_upper_corner_point() + horizontal_vecteur * (i * delta_u) - vertical_vecteur * (j * delta_v);
+    auto [dx, dy] = sample_square();
+    return get_left_upper_corner_point() + horizontal_vecteur * ((i + 0.5 * dx) * delta_u) - vertical_vecteur * ((j + 0.5 * dy) * delta_v);
 }
 
 Ray Camera::build_ray(int i, int j)

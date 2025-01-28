@@ -1,5 +1,6 @@
 #pragma once
 #include <iostream>
+#include <cstdlib>
 
 class Vector;
 class Point;
@@ -64,3 +65,5 @@ public:
 
 Color colorName(char);
 Color mix(Color, float, Color, float);
+
+std::pair<double, double> sample_square();

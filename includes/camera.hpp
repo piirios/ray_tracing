@@ -11,6 +11,8 @@ private:
     double viewport_width;
     double viewport_height;
 
+    double pixel_samples_scale;
+
     inline Point get_point(int i, int j);
 
 public:
@@ -28,7 +30,7 @@ public:
 
     inline Point get_left_upper_corner_point();
     Camera();
-    Camera(Point p, Vector d, double dist, int width, double ratio, double viewport_width);
+    Camera(Point p, Vector d, double dist, int width, double ratio, double viewport_width, double pss);
 
     const inline double real_ratio() const; // permet de récupérer le ratio réel
 
