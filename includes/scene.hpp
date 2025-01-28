@@ -28,5 +28,8 @@ public:
     int width() const;
 
     void render();
+
+    std::optional<std::pair<Object *, Point>> try_hit(Ray r);
+
     void display();
 };

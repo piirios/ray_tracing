@@ -29,6 +29,7 @@ public:
 
   Vector();
   Vector(float, float, float);
+  Vector random_unit();
   float norm();
   float pt_dot(Point);
   float dot(Vector); // produit scalaire

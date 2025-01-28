@@ -2,6 +2,13 @@
 #include <cmath>
 #include <random>
 
+inline double random_double()
+{
+  static std::uniform_real_distribution<double> distribution(0.0, 1.0);
+  static std::mt19937 generator;
+  return distribution(generator);
+}
+
 Point::Point(float ax, float ay, float az) : x(ax), y(ay), z(az) {};
 
 Point::Point() : x(0.), y(0.), z(0.) {};
@@ -28,6 +35,19 @@ Point Point::operator-(Vector v)
 
 Vector::Vector() : x(.0), y(.0), z(.0) {};
 Vector::Vector(float ax, float ay, float az) : x(ax), y(ay), z(az) {};
+
+Vector Vector::random_unit()
+{
+  while (true)
+  {
+    auto v = Vector(-1. + 2 * random_double(), -1. + 2 * random_double(), -1. + 2 * random_double());
+    auto norm = v.norm();
+    if (1e-60 < norm)
+    {
+      return v / v.norm();
+    }
+  }
+}
 
 float Vector::norm()
 {

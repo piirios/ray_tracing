@@ -101,49 +101,36 @@ int Scene::width() const
     return camera.width;
 }
 
-/* void Scene::render()
+std::optional<std::pair<Object *, Point>> Scene::try_hit(Ray ray)
 {
-    pixel.resize(camera.width * camera.height);
+    Object *closest_object = nullptr;
+    Point closest_intersection;
+    float closest_distance = std::numeric_limits<float>::max();
 
-    std::cout << "Nombre d'objets dans la scène : " << obj_list.size() << std::endl;
-    for (int i = 0; i < camera.width; i++)
+    for (auto &obj : obj_list)
     {
-        for (int j = 0; j < camera.height; j++)
+        auto intersection = obj->intersect(ray);
+        if (intersection.has_value())
         {
-            Ray ray = camera.build_ray(i, j);
-            Object *closest_object = nullptr;
-            Point closest_intersection;
-            float closest_distance = std::numeric_limits<float>::max();
-            for (auto &obj : obj_list)
+            float distance = (intersection.value() - ray.start).norm();
+            if (distance < closest_distance)
             {
-                auto intersection = obj->intersect(ray);
-                if (intersection.has_value())
-                {
-                    float distance = (intersection.value() - ray.start).norm();
-
-                    if (distance < closest_distance)
-                    {
-                        closest_distance = distance;
-                        closest_object = obj;
-                        closest_intersection = intersection.value();
-                    }
-                }
-                else
-                {
-                }
-            }
-
-            if (closest_object)
-            {
-                pixel[i + j * camera.width] = closest_object->get_color(closest_intersection).into();
-            }
-            else
-            {
-                pixel[i + j * camera.width] = sky.get_color(Point()).into();
+                closest_distance = distance;
+                closest_object = obj;
+                closest_intersection = intersection.value();
             }
         }
     }
-} */
+    if (closest_object)
+    {
+        return std::optional{std::pair{closest_object, closest_intersection}};
+    }
+    else
+    {
+        return std::nullopt;
+    }
+}
+
 void Scene::render()
 {
     pixel.resize(camera.width * camera.height);
@@ -158,28 +145,12 @@ void Scene::render()
             {
                 Ray ray = camera.build_ray(i, j);
 
-                Object *closest_object = nullptr;
-                Point closest_intersection;
-                float closest_distance = std::numeric_limits<float>::max();
+                auto hit = try_hit(ray);
 
-                for (auto &obj : obj_list)
+                if (hit.has_value())
                 {
-                    auto intersection = obj->intersect(ray);
-                    if (intersection.has_value())
-                    {
-                        float distance = (intersection.value() - ray.start).norm();
-                        if (distance < closest_distance)
-                        {
-                            closest_distance = distance;
-                            closest_object = obj;
-                            closest_intersection = intersection.value();
-                        }
-                    }
-                }
-
-                if (closest_object)
-                {
-                    total_color = mix(total_color, 1.0f, closest_object->get_color(closest_intersection), 1.0f / samples_per_pixel);
+                    auto [closest_object, intersection_point] = hit.value();
+                    total_color = mix(total_color, 1.0f, closest_object->get_color(intersection_point), 1.0f / samples_per_pixel);
                 }
                 else
                 {
